@@ -1,12 +1,29 @@
 const WebSocket = require('ws');
+const http = require('http');
+const fs = require('fs');
+const path = require('path');
+
+// Cria o servidor HTTP
+const server = http.createServer((req, res) => {
+    // Verifica se o arquivo solicitado é o index.html
+    if (req.url === '/') {
+        fs.readFile(path.join(__dirname, 'public', 'index.html'), (err, data) => {
+            if (err) {
+                res.writeHead(500);
+                return res.end('Erro ao carregar index.html');
+            }
+            res.writeHead(200, { 'Content-Type': 'text/html' });
+            res.end(data);
+        });
+    } else {
+        // Se for um arquivo que não seja o index.html
+        res.writeHead(404);
+        res.end('404 Not Found');
+    }
+});
 
 // Crie o servidor WebSocket
-const wss = new WebSocket.Server({ port: process.env.PORT || 8080 });
-
-// Adicione um log para indicar que o servidor está em execução
-wss.on('listening', () => {
-    console.log(`WebSocket server is running on port ${process.env.PORT || 8080}`);
-});
+const wss = new WebSocket.Server({ server });
 
 wss.on('connection', (ws) => {
     let countdown = 60;
@@ -17,7 +34,6 @@ wss.on('connection', (ws) => {
             countdown--;
         } else {
             clearInterval(timer);
-            // Enviar uma mensagem ao cliente quando a contagem regressiva terminar
             ws.send(JSON.stringify({ message: 'Timer finished' }));
         }
     }, 1000); // Envia o tempo a cada segundo
@@ -27,3 +43,8 @@ wss.on('connection', (ws) => {
     });
 });
 
+// O servidor HTTP deve escutar em uma porta especificada pelo Railway
+const PORT = process.env.PORT || 8080;
+server.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});
