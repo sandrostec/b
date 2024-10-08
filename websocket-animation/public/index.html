@@ -25,7 +25,7 @@
 
     <script>
         // Conectando ao servidor WebSocket
-        const socket = new WebSocket(`ws://${window.location.host}`);
+        const socket = new WebSocket(`ws://localhost:8080`);
 
         socket.onopen = () => {
             console.log('Conectado ao servidor WebSocket');

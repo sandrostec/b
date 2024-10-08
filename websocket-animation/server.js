@@ -27,8 +27,9 @@ wss.on('connection', (ws) => {
     console.log('Novo cliente conectado');
 
     const sendRandomPosition = () => {
-        const x = Math.floor(Math.random() * 100);
-        const y = Math.floor(Math.random() * 100);
+        // Gera posições aleatórias
+        const x = Math.floor(Math.random() * 90); // De 0 a 90% da largura
+        const y = Math.floor(Math.random() * 90); // De 0 a 90% da altura
         ws.send(JSON.stringify({ x, y }));
     };
 
