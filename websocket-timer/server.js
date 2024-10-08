@@ -5,7 +5,6 @@ const path = require('path');
 
 // Cria o servidor HTTP
 const server = http.createServer((req, res) => {
-    // Verifica se o arquivo solicitado é o index.html
     if (req.url === '/') {
         fs.readFile(path.join(__dirname, 'public', 'index.html'), (err, data) => {
             if (err) {
@@ -16,7 +15,6 @@ const server = http.createServer((req, res) => {
             res.end(data);
         });
     } else {
-        // Se for um arquivo que não seja o index.html
         res.writeHead(404);
         res.end('404 Not Found');
     }
@@ -26,7 +24,7 @@ const server = http.createServer((req, res) => {
 const wss = new WebSocket.Server({ server });
 
 wss.on('connection', (ws) => {
-    console.log('Novo cliente conectado'); // Log de conexão
+    console.log('Novo cliente conectado');
     let countdown = 60;
 
     const timer = setInterval(() => {
@@ -41,12 +39,12 @@ wss.on('connection', (ws) => {
 
     ws.on('close', () => {
         clearInterval(timer);
-        console.log('Cliente desconectado'); // Log de desconexão
+        console.log('Cliente desconectado');
     });
 });
 
-// O servidor HTTP deve escutar em uma porta especificada pelo Railway
-const PORT = process.env.PORT || 8080;
+// O servidor HTTP deve escutar em uma porta especificada
+const PORT = 8080; // Defina a porta como 8080 ou outra de sua escolha
 server.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });

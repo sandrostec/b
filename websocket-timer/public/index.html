@@ -24,7 +24,7 @@
 
     <script>
         // Conectando ao servidor WebSocket
-        const socket = new WebSocket(`ws://${window.location.host}`);
+        const socket = new WebSocket(`ws://localhost:8080`);
 
         socket.onopen = () => {
             console.log('Conectado ao servidor WebSocket');
@@ -32,12 +32,10 @@
 
         socket.onmessage = (event) => {
             const data = JSON.parse(event.data);
-            console.log('Mensagem recebida:', data); // Log de mensagens recebidas
+            console.log('Mensagem recebida:', data);
             if (data.time !== undefined) {
-                // Atualiza o contador no HTML
                 document.getElementById('timer').innerText = data.time;
             } else if (data.message) {
-                // Exibe mensagem quando o temporizador termina
                 alert(data.message);
             }
         };
@@ -52,3 +50,4 @@
     </script>
 </body>
 </html>
+
