@@ -1,11 +1,91 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Documeeeeeeeeent</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Página Exemplo</title>
+    <meta name="description" content="Exemplo de página HTML completa">
+    <meta name="author" content="Seu Nome">
+    
+    <!-- Link para o CSS externo -->
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- Estilos internos (opcional) -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #333;
+            color: white;
+            padding: 1em;
+            text-align: center;
+        }
+        main {
+            padding: 2em;
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1em;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
 </head>
 <body>
-    
+
+    <!-- Cabeçalho da página -->
+    <header>
+        <h1>Bem-vindo à Minha Página</h1>
+        <p>Exemplo de uma página HTML completa</p>
+    </header>
+
+    <!-- Conteúdo principal -->
+    <main>
+        <h2>Sobre Esta Página</h2>
+        <p>Esta é uma página de exemplo que mostra a estrutura básica de um documento HTML completo.</p>
+
+        <h3>Seções</h3>
+        <ul>
+            <li>Introdução</li>
+            <li>Conteúdo Principal</li>
+            <li>Conclusão</li>
+        </ul>
+
+        <p>HTML é uma linguagem de marcação usada para criar páginas web.</p>
+
+        <!-- Formulário de exemplo -->
+        <h3>Formulário de Contato</h3>
+        <form action="/enviar" method="post">
+            <label for="nome">Nome:</label>
+            <input type="text" id="nome" name="nome" required><br><br>
+
+            <label for="email">E-mail:</label>
+            <input type="email" id="email" name="email" required><br><br>
+
+            <label for="mensagem">Mensagem:</label><br>
+            <textarea id="mensagem" name="mensagem" rows="4" cols="50" required></textarea><br><br>
+
+            <input type="submit" value="Enviar">
+        </form>
+    </main>
+
+    <!-- Rodapé -->
+    <footer>
+        <p>&copy; 2024 Meu Site - Todos os direitos reservados.</p>
+    </footer>
+
+    <!-- Scripts JS (opcional) -->
+    <script>
+        console.log("Página carregada com sucesso!");
+    </script>
+
 </body>
 </html>
