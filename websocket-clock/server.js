@@ -20,4 +20,6 @@ wss.on('connection', (ws) => {
     });
 });
 
+
+
 console.log("Servidor WebSocket rodando na porta 8080");
