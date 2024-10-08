@@ -11,7 +11,9 @@
 
     <script>
         const countdownElement = document.getElementById('countdown');
-        const socket = new WebSocket('ws://localhost:8080');
+
+        // Conectar ao WebSocket usando a URL do Railway com o protocolo wss://
+        const socket = new WebSocket('wss://b-production-d7c7.up.railway.app');
 
         socket.onmessage = (event) => {
             countdownElement.textContent = `Tempo restante: ${event.data} segundos`;
