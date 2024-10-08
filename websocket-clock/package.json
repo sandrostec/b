@@ -1,16 +1,13 @@
 {
-  "name": "websocket-clock",
+  "name": "websocket-timer",
   "version": "1.0.0",
-  "main": "index.js",
+  "description": "WebSocket Timer for Railway",
+  "main": "server.js",
   "scripts": {
-    "start": "node index.js", 
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js"
   },
-  "engines": {
-    "node": "18.x"  
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": ""
+  "dependencies": {
+    "ws": "^8.0.0"
+  }
+  
 }
