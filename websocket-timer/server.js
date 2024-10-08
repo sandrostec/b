@@ -26,6 +26,7 @@ const server = http.createServer((req, res) => {
 const wss = new WebSocket.Server({ server });
 
 wss.on('connection', (ws) => {
+    console.log('Novo cliente conectado'); // Log de conexão
     let countdown = 60;
 
     const timer = setInterval(() => {
@@ -40,6 +41,7 @@ wss.on('connection', (ws) => {
 
     ws.on('close', () => {
         clearInterval(timer);
+        console.log('Cliente desconectado'); // Log de desconexão
     });
 });
 

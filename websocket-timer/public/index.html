@@ -26,8 +26,13 @@
         // Conectando ao servidor WebSocket
         const socket = new WebSocket(`ws://${window.location.host}`);
 
+        socket.onopen = () => {
+            console.log('Conectado ao servidor WebSocket');
+        };
+
         socket.onmessage = (event) => {
             const data = JSON.parse(event.data);
+            console.log('Mensagem recebida:', data); // Log de mensagens recebidas
             if (data.time !== undefined) {
                 // Atualiza o contador no HTML
                 document.getElementById('timer').innerText = data.time;
@@ -37,12 +42,12 @@
             }
         };
 
-        socket.onopen = () => {
-            console.log('Conectado ao servidor WebSocket');
-        };
-
         socket.onclose = () => {
             console.log('Conexão fechada');
+        };
+
+        socket.onerror = (error) => {
+            console.error('Erro na conexão WebSocket:', error);
         };
     </script>
 </body>
