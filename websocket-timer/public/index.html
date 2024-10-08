@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,8 +7,11 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            text-align: center;
-            margin-top: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
         }
         #timer {
             font-size: 48px;
@@ -17,19 +20,29 @@
     </style>
 </head>
 <body>
-    <h1>Contagem Regressiva</h1>
     <div id="timer">60</div>
 
     <script>
-        const socket = new WebSocket('ws://' + window.location.host);
+        // Conectando ao servidor WebSocket
+        const socket = new WebSocket(`ws://${window.location.host}`);
 
-        socket.onmessage = function(event) {
+        socket.onmessage = (event) => {
             const data = JSON.parse(event.data);
-            document.getElementById('timer').textContent = data.time;
+            if (data.time !== undefined) {
+                // Atualiza o contador no HTML
+                document.getElementById('timer').innerText = data.time;
+            } else if (data.message) {
+                // Exibe mensagem quando o temporizador termina
+                alert(data.message);
+            }
         };
 
-        socket.onclose = function() {
-            console.log('Conexão WebSocket fechada');
+        socket.onopen = () => {
+            console.log('Conectado ao servidor WebSocket');
+        };
+
+        socket.onclose = () => {
+            console.log('Conexão fechada');
         };
     </script>
 </body>
