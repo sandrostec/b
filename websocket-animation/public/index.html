@@ -3,29 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Animação WebSocket</title>
+    <title>WebSocket Timer</title>
     <style>
         body {
-            margin: 0;
-            overflow: hidden;
             position: relative;
+            height: 100vh;
+            overflow: hidden;
             background-color: #f0f0f0;
         }
         #circle {
+            position: absolute;
             width: 50px;
             height: 50px;
             background-color: red;
             border-radius: 50%;
-            position: absolute;
+            transition: left 0.5s, top 0.5s; /* Adiciona uma transição suave */
         }
     </style>
 </head>
 <body>
     <div id="circle"></div>
-
     <script>
         // Conectando ao servidor WebSocket
-        const socket = new WebSocket(`ws://localhost:8080`);
+        const socket = new WebSocket(`wss://b-production-dd8e.up.railway.app/`);
 
         socket.onopen = () => {
             console.log('Conectado ao servidor WebSocket');
@@ -49,4 +49,3 @@
     </script>
 </body>
 </html>
-
