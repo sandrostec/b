@@ -1,24 +1,21 @@
 const WebSocket = require('ws');
 
-const port = process.env.PORT || 8080; // Usa a variável de ambiente PORT ou a 8080
-const wss = new WebSocket.Server({ port });
+// Crie o servidor WebSocket
+const wss = new WebSocket.Server({ port: process.env.PORT || 8080 });
 
 wss.on('connection', (ws) => {
-    let countdown = 1000; // Define o contador regressivo inicial
+    let countdown = 60;
 
-    // Enviar a contagem regressiva a cada segundo
-    const interval = setInterval(() => {
+    const timer = setInterval(() => {
         if (countdown >= 0) {
-            ws.send(countdown.toString()); // Envia o valor atual do contador
+            ws.send(JSON.stringify({ time: countdown }));
             countdown--;
         } else {
-            clearInterval(interval); // Para o contador quando chegar a 0
+            clearInterval(timer);
         }
-    }, 1000);
+    }, 1000); // Envia o tempo a cada segundo
 
     ws.on('close', () => {
-        clearInterval(interval); // Para o intervalo caso o cliente feche a conexão
+        clearInterval(timer);
     });
 });
-
-console.log(`Servidor WebSocket rodando na porta ${port}`);
