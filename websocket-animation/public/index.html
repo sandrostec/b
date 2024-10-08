@@ -3,28 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WebSocket Timer</title>
+    <title>Animação WebSocket</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            position: relative;
             background-color: #f0f0f0;
         }
-        #timer {
-            font-size: 48px;
-            color: #333;
+        #circle {
+            width: 50px;
+            height: 50px;
+            background-color: red;
+            border-radius: 50%;
+            position: absolute;
         }
     </style>
 </head>
 <body>
-    <div id="timer">60</div>
+    <div id="circle"></div>
 
     <script>
         // Conectando ao servidor WebSocket
-        const socket = new WebSocket(`ws://localhost:8080`);
+        const socket = new WebSocket(`ws://${window.location.host}`);
 
         socket.onopen = () => {
             console.log('Conectado ao servidor WebSocket');
@@ -32,12 +33,10 @@
 
         socket.onmessage = (event) => {
             const data = JSON.parse(event.data);
-            console.log('Mensagem recebida:', data);
-            if (data.time !== undefined) {
-                document.getElementById('timer').innerText = data.time;
-            } else if (data.message) {
-                alert(data.message);
-            }
+            const circle = document.getElementById('circle');
+            // Atualiza a posição do círculo
+            circle.style.left = `${data.x}vw`;
+            circle.style.top = `${data.y}vh`;
         };
 
         socket.onclose = () => {

@@ -1,7 +1,7 @@
 const WebSocket = require('ws');
 const http = require('http');
-const fs = require('fs');
 const path = require('path');
+const fs = require('fs');
 
 // Cria o servidor HTTP
 const server = http.createServer((req, res) => {
@@ -20,31 +20,28 @@ const server = http.createServer((req, res) => {
     }
 });
 
-// Crie o servidor WebSocket
+// Cria o servidor WebSocket
 const wss = new WebSocket.Server({ server });
 
 wss.on('connection', (ws) => {
     console.log('Novo cliente conectado');
-    let countdown = 60;
 
-    const timer = setInterval(() => {
-        if (countdown >= 0) {
-            ws.send(JSON.stringify({ time: countdown }));
-            countdown--;
-        } else {
-            clearInterval(timer);
-            ws.send(JSON.stringify({ message: 'Timer finished' }));
-        }
-    }, 1000); // Envia o tempo a cada segundo
+    const sendRandomPosition = () => {
+        const x = Math.floor(Math.random() * 100);
+        const y = Math.floor(Math.random() * 100);
+        ws.send(JSON.stringify({ x, y }));
+    };
+
+    const intervalId = setInterval(sendRandomPosition, 1000); // Envia novas posições a cada segundo
 
     ws.on('close', () => {
-        clearInterval(timer);
+        clearInterval(intervalId);
         console.log('Cliente desconectado');
     });
 });
 
 // O servidor HTTP deve escutar em uma porta especificada
-const PORT = 8080; // Defina a porta como 8080 ou outra de sua escolha
+const PORT = process.env.PORT || 8080;
 server.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
